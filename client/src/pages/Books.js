@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DeleteBtn from "../components/DeleteBtn";
 import Jumbotron from "../components/Jumbotron";
+import HighlightBtn from "../components/HIghlightBtn";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
@@ -29,6 +30,12 @@ function Books() {
   // Deletes a book from the database with a given id, then reloads books from the db
   function deleteBook(id) {
     API.deleteBook(id)
+      .then(res => loadBooks())
+      .catch(err => console.log(err));
+  }
+
+  function highlightBook(id) {
+    API.updateBook(id)
       .then(res => loadBooks())
       .catch(err => console.log(err));
   }
@@ -99,6 +106,8 @@ function Books() {
                       </strong>
                     </Link>
                     <DeleteBtn onClick={() => deleteBook(book._id)} />
+                    {""}
+                    <HighlightBtn onClick={() => highlightBook(book._id)} />         
                   </ListItem>
                 ))}
               </List>
